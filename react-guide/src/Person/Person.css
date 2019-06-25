@@ -7,15 +7,8 @@
     padding: 10px 0;
 }
 
-/* .btn {
-    color: #fff;
-    background-color: #3fe429;
-} */
-
-.red {
-    color: red;
-}
-
-.bold {
-    font-weight: 600;
+@media (min-width: 500px) {
+    .Person {
+        width: 400px;
+    }
 }
