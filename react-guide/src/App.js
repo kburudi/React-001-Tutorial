@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import Radium, { StyleRoot } from 'radium'; // --- Radium ---
-import './App.css';
+import cssClasses from './App.css';
 import Person from './Person/Person'
 
 // function App() {
@@ -49,18 +49,21 @@ class App extends Component {
     this.setState({ person: persons })
   }
 
-  toglePersonHandler = () => {
+  toglePersonHandler = (e) => {
     const showing = this.state.showPersons
     this.setState({
       showPersons: !showing,
     })
   }
 
-  togleNewPersonHandler = () => {
+  togleNewPersonHandler = (e) => {
     const showing = this.state.newPerson
     this.setState({
       newPerson: !showing,
     })
+
+    e.target.classList.toggle(cssClasses.redBtn)
+    e.target.classList.toggle(cssClasses.greenBtn)
   }
 
   deletePersonHandler = (personIndex) => {
@@ -74,7 +77,6 @@ class App extends Component {
   render() {
     const btnStyle = {
       color: "#fff",
-      backgroundColor: "green",
       padding: "8px 14px",
       cursor: "pointer",
       outline: "none",
@@ -84,6 +86,8 @@ class App extends Component {
       //   color: "black",
       // },
     }
+
+    const btnStyle1 = { ...btnStyle }
 
     let persons = null
 
@@ -132,11 +136,10 @@ class App extends Component {
       </div>
     }
 
-    const redBold = ['red', 'bold'].join(' ') // "red bold"
-
+    // const redBold = ['red', 'bold'].join(' ') // "red bold"
     return (
       // <StyleRoot></StyleRoot>  //--> radium wrapper
-      <div className="App">
+      <div className={cssClasses.App}>
         <h2> Crap, react  is gon be whack on sublime text</h2>
         {/*
         Stateless
@@ -151,29 +154,29 @@ class App extends Component {
         {/* Using the arrow function */}
         <button
           key="btn1"
-          onClick={this.toglePersonHandler}
+          onClick={(event) => this.toglePersonHandler(event)}
           style={btnStyle}
-          className="btn"
+          className={cssClasses.greenBtn}
         >Click Me</button>
 
         <button
           key="btn2"
-          onClick={this.togleNewPersonHandler}
-          style={btnStyle}
-          className="btn newBtn"
+          onClick={(event) => this.togleNewPersonHandler(event)}
+          style={btnStyle1}
+          className={cssClasses.greenBtn}
         >New Person</button>
 
         {/* Tanery js */}
         <div>
           {this.state.newPerson ?
-            <div>
+            < div >
               <Person
                 name="New Person"
-                age="1"
+                age="10"
                 click={null}
                 changed={(event) => this.nameChangedHandler(event, '1')}
               />
-            </div> : <p className={redBold}> New Person Hidden </p>
+            </div> : <p className={[cssClasses.red, cssClasses.bold].join(' ')}> New Person Hidden </p>
           }
         </div>
 
