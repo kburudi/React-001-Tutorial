@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import Radium, { StyleRoot } from 'radium'; // --- Radium ---
 import './App.css';
 import Person from './Person/Person'
 
@@ -17,7 +18,9 @@ class App extends Component {
       { name: "Trevor", age: 21 },
       { name: "Jonathan", age: 24 },
       { name: "Marvin", age: 26 },
-    ]
+    ],
+    showPersons: false,
+    newPerson: false,
   }
 
   switchNameHandler = (newName) => {
@@ -32,28 +35,107 @@ class App extends Component {
     )
   }
 
-  nameChangedHandler = (e) => {
-    this.setState(
-      {
-        person: [
-          { name: "Zonecc", age: 21 },
-          { name: "Musila", age: 24 },
-          { name: e.target.value, age: 30 },
-        ]
-      }
-    )
+  nameChangedHandler = (e, age) => {
+    const personIndex = this.state.person.findIndex(p => {
+      return p.age === age
+    });
+
+    const person = { ...this.state.person[personIndex] };
+
+    person.name = e.target.value;
+    const persons = [...this.state.person];
+    persons[personIndex] = person;
+
+    this.setState({ person: persons })
+  }
+
+  toglePersonHandler = () => {
+    const showing = this.state.showPersons
+    this.setState({
+      showPersons: !showing,
+    })
+  }
+
+  togleNewPersonHandler = () => {
+    const showing = this.state.newPerson
+    this.setState({
+      newPerson: !showing,
+    })
+  }
+
+  deletePersonHandler = (personIndex) => {
+    // const persons = this.state.person; --> bad idea
+    // const persons = this.state.person.slice(); // --> better
+    const persons = [...this.state.person] // --> spread operator
+    persons.splice(personIndex, 1);
+    this.setState({ person: persons })
   }
 
   render() {
     const btnStyle = {
       color: "#fff",
-      backgroundColor: "#000",
+      backgroundColor: "green",
       padding: "8px 14px",
       cursor: "pointer",
       outline: "none",
+      // --- Radium ---
+      // ":hover": {
+      //   backgroundColor: "lightgreen",
+      //   color: "black",
+      // },
     }
 
+    let persons = null
+
+    if (this.state.showPersons) {
+      btnStyle.backgroundColor = "red"
+
+      // --- Radium ---
+      // btnStyle[":hover"] = {
+      //   backgroundColor: 'orange',
+      //   color: "black",
+      // }
+
+
+      // Old way
+      /* persons = (
+        <div>
+          <Person
+            name={this.state.person[0].name}
+            age={this.state.person[0].age}
+          />
+          <Person
+            name={this.state.person[1].name}
+            age={this.state.person[1].age}
+            click={this.switchNameHandler.bind(this, 'Kurland')}>
+            My Hobby: Singing
+            </Person>
+          <Person
+            name={this.state.person[2].name}
+            age={this.state.person[2].age}
+            changed={this.nameChangedHandler}
+          />
+        </div>
+      ); */
+
+      persons = <div>{
+        this.state.person.map((per, index) => {
+          return <Person
+            key={index}
+            name={per.name}
+            age={per.age}
+            click={() => this.deletePersonHandler(index)}
+            changed={(event) => this.nameChangedHandler(event, per.age)}
+          />
+        })
+      }
+      </div>
+    }
+
+    const redBold = ['red', 'bold'].join(' ') // "red bold"
+
     return (
+      // <StyleRoot></StyleRoot>  //--> radium wrapper
       <div className="App">
         <h2> Crap, react  is gon be whack on sublime text</h2>
         {/*
@@ -68,24 +150,35 @@ class App extends Component {
 
         {/* Using the arrow function */}
         <button
-          onClick={() => this.switchNameHandler('Zonecc!!')}
+          key="btn1"
+          onClick={this.toglePersonHandler}
           style={btnStyle}
           className="btn"
         >Click Me</button>
-        <Person name={this.state.person[0].name} age={this.state.person[0].age} />
-        {/* Using Bind */}
-        <Person
-          name={this.state.person[1].name}
-          age={this.state.person[1].age}
-          click={this.switchNameHandler.bind(this, 'Kurland')}
-        >
-          My Hobby: Singing
-        </Person>
-        <Person
-          name={this.state.person[2].name}
-          age={this.state.person[2].age}
-          changed={this.nameChangedHandler}
-        />
+
+        <button
+          key="btn2"
+          onClick={this.togleNewPersonHandler}
+          style={btnStyle}
+          className="btn newBtn"
+        >New Person</button>
+
+        {/* Tanery js */}
+        <div>
+          {this.state.newPerson ?
+            <div>
+              <Person
+                name="New Person"
+                age="1"
+                click={null}
+                changed={(event) => this.nameChangedHandler(event, '1')}
+              />
+            </div> : <p className={redBold}> New Person Hidden </p>
+          }
+        </div>
+
+        {/* Conditional statements js render */}
+        {persons}
       </div>
     );
     // return React.createElement('div', { className: 'App' }, React.createElement('h1',
@@ -93,4 +186,5 @@ class App extends Component {
   }
 }
 
-export default App;
+// export default Radium(App); // --> using radium
+export default App; 
