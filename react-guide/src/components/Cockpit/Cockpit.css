@@ -1,0 +1,23 @@
+.red {
+    color: red;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.redBtn {
+    background-color: red;
+}
+
+.greenBtn {
+    background-color: green;
+}
+
+.redBtn:hover {
+    background-color: orange;
+}
+
+.greenBtn:hover {
+    background-color: lightgreen;
+}
