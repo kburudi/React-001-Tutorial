@@ -1,5 +1,6 @@
 import React from 'react';
 import cssClasses from './Cockpit.css';
+import Aux from '../../hoc/Aux';
 
 const cockpit = (props) => {
     const btnStyle = {
@@ -14,16 +15,19 @@ const cockpit = (props) => {
     }
 
     return (
-        <div>
+        <Aux>
             <h2> Crap, react  is gon be whack on sublime text</h2>
 
             <button
                 key="btn1"
                 onClick={props.clicked}
                 style={btnStyle}
-                className={cssClasses.greenBtn}
-            >Click Me</button>
-        </div>
+                className={cssClasses.greenBtn} >
+                Click Me
+            </button>
+
+            <button onClick={props.login} > Log In </button>
+        </Aux>
     )
 };
 
