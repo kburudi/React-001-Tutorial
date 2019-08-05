@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import counterReducer from './reducers/counter';
-import resultReducer from './reducers/store';
+import resultReducer from './reducers/result';
 
 const reducer = combineReducers({
   counter: counterReducer,

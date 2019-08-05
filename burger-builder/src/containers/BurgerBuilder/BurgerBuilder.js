@@ -9,7 +9,7 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actionTypes from '../../store/actions';
+import actionTypes from '../../store/actions/types';
 
 class BurgerBuilder extends Component {
   state = {
