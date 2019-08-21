@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 import ModalCSS from './Modal.css';
-import Aux from '../../../hoc/Aux/Aux';
+import Aux from '../../../hoc/Auxil/Auxil';
 import Backdrop from '../Backdrop/Backdrop';
 
 class Modal extends Component {
@@ -16,11 +16,11 @@ class Modal extends Component {
   render() {
     return (
       <Aux>
-        <Backdrop show={this.props.show} clicked={this.props.modalClosed}/>
+        <Backdrop show={this.props.show} clicked={this.props.modalClosed} />
         <div
           className={ModalCSS.Modal}
           style={{
-            transform: this.props.show ? 'translateY(0)': 'translateY(-100vh)',
+            transform: this.props.show ? 'translateY(0)' : 'translateY(-100vh)',
             opacity: this.props.show ? 1 : 0
           }}
         >
